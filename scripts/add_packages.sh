@@ -31,3 +31,9 @@ function init_theme() {
 EOL
 sed -i -e '/boardname=/r /tmp/appendtext.txt' friendlywrt/target/linux/rockchip/armv8/base-files/root/setup.sh
 # }}
+
+# {{ Add podman
+cat >> configs/rockchip-docker/06-docker <<EOL
+CONFIG_PACKAGE_podman=y
+EOL
+# }}
