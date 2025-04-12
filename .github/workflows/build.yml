@@ -31,8 +31,8 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
     strategy:
       matrix:
-        VERSION: ['23.05', '24.10']
-        SET: [docker, non-docker]
+        VERSION: ['24.10']
+        SET: [docker]
 
     steps:
     - name: Checkout
@@ -141,9 +141,9 @@ jobs:
 
     strategy:
       matrix:
-        VERSION: ['23.05', '24.10']
-        CPU: [rk3328, rk3528, rk3399, rk3566, rk3568, rk3588]
-        SET: [docker, non-docker]
+        VERSION: ['24.10']
+        CPU: [rk3568]
+        SET: [docker]
     steps:
     - name: Checkout
       uses: actions/checkout@main
@@ -244,6 +244,8 @@ jobs:
         TARGET_FRIENDLYWRT_CONFIG=${CONFIG}
         TARGET_SD_RAW_FILENAME=${FILENAME}
         EOL
+        # 启用cpuset
+        sed -i '/bootargs_ext =/ s/";/ cgroup_enable=cpuset";/' kernel/scripts/dtc/include-prefixes/arm64/rockchip/rk3568-nanopi5-common.dtsi
         echo "##[set-output name=img_filename;]$FILENAME"
 
     - name: Unpack friendlywrt rootfs
